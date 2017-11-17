@@ -33,7 +33,8 @@ import org.slf4j.Logger;
  * <P>
  * 
  * With that said, welcome to this plugin's documentation. This is the main class.
- * Also, this project is using gradle & eclipse. If I make another plugin, I'll try using Intellij IDEA.
+ * Also, this project is using gradle & eclipse. If I make another plugin, 
+ * I'll try using Intellij IDEA.
  */
 public class Breeding {
 
@@ -51,7 +52,8 @@ public class Breeding {
 	private Logger logger;
 
 	/**
-	 * Internal variable that does all of the work with the data given from the config file.
+	 * Internal variable that does all of the work with the data given from 
+	 * the config file.
 	 */
 	private BreedingManager breedingManager;
 
@@ -59,32 +61,35 @@ public class Breeding {
 	final String DEFAULT_CONFIG_NAME = "default.conf";
 
 	/**
-	 * Initializes the plugin by loading up the config file
+	 * Initializes the plugin by loading up the config file.
 	 * 
-	 * @param event
+	 * @param event runs when the server is starting up
 	 */
 	@Listener
 	public void onInitializationEvent(GameInitializationEvent event) {
 		breedingManager = new BreedingManager(this);
-		
+
 		// Gets config data
 		breedingManager.setData(getConfigData());
-		
+
 		// Activate listeners in this class and the BreedingManager class
 		Sponge.getEventManager().registerListeners(this, breedingManager);
 	}
 
 	/**
-	 * Attempts to load the player config file (the config file the server administrators can edit).
+	 * Attempts to load the player config file (the config file the server 
+	 * administrators can edit).
 	 * <P>
 	 * 
-	 * If the player config file cannot be loaded up for whatever reason, the default config settings will be returned.
+	 * If the player config file cannot be loaded up for whatever reason, 
+	 * the default config settings will be returned.
 	 * 
 	 * If the player config file does not exist in the expected area,
 	 * the player config file will be set as the default config file.
 	 * 
-	 * If the default config file cannot be found, the default config settings will still be used,
-	 * except the default config file will not be put in place of the player config file.
+	 * If the default config file cannot be found, the default config 
+	 * settings will still be used, except the default config file will 
+	 * not be put in place of the player config file.
 	 * 
 	 * @return the config data
 	 */
@@ -131,9 +136,12 @@ public class Breeding {
 	}
 
 	/**
+	 * Gets the config data as defined by the player.conf file.
+	 * Anything that has the wrong value will be subject to change
+	 * at {@link BreedingManager#setData(BreedingData)}.
 	 * 
-	 * @param rootNode
-	 * @return
+	 * @param rootNode the node for the player.conf file
+	 * @return player config data
 	 */
 	private BreedingData getPlayerConfigData(ConfigurationNode rootNode) {
 
@@ -155,14 +163,14 @@ public class Breeding {
 		}
 
 		debugLevel = rootNode.getNode("debug_level").getInt();
-		
+
 		playerConfigData.setEnabled(enablePlugin);
 		playerConfigData.setGlobalChance(globalChance);
 		playerConfigData.setIndividualMobChance(individualMobChance);
 		playerConfigData.setDebugLevel(debugLevel);
 
 		getLogger().info("Successfully loaded and read the config file.");
-		
+
 		return playerConfigData;
 	}
 
@@ -170,8 +178,8 @@ public class Breeding {
 	 * Runs only when the player config file cannot be used.
 	 * <P>
 	 * 
-	 * This method is hard coded into the JVM.
-	 * Therefore, it does not actually need the default configuration file to work.
+	 * This method is hard coded into the JVM. Therefore, it 
+	 * does not actually need the default configuration file to work.
 	 * 
 	 * @return the default config data
 	 */
@@ -198,9 +206,9 @@ public class Breeding {
 	}
 
 	/**
-	 * Loads the default config given inside the plugin jar file
-	 * 
-	 * @return whether the default config can be loaded or not
+	 * Loads the default config given inside the plugin jar file.
+	 * If it can be loaded, it creates the player.conf file to have
+	 * the same contents as the default config file.
 	 */
 	private void loadDefaultConfig() {
 
@@ -226,18 +234,16 @@ public class Breeding {
 		}
 	}
 
-
 	/**
 	 * Gets the config data again if the plugin is reloaded
 	 * 
-	 * @param event
+	 * @param event runs when "/sponge plugins reload" is ran
 	 */
-    @Listener
-    public void onReloadEvent(GameReloadEvent event) {
-        breedingManager.setData(getConfigData());
-    }
+	@Listener
+	public void onReloadEvent(GameReloadEvent event) {
+		breedingManager.setData(getConfigData());
+	}
 
-	
 	/**
 	 * Gets the logger for the plugin to output text into the console.
 	 * 

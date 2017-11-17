@@ -4,9 +4,7 @@ import org.spongepowered.api.entity.EntityTypes;
 
 /**
  * ID values of all breedable animals excluding the villager.
- * <P>
- * 
- * It holds the Sponge EntityType of the entity as well as the plugin id number, used for the individual mob chances.
+ * It is held according to {@link EntityData#EntityData(org.spongepowered.api.entity.EntityType, int)}.
  */
 public class EntitiesID {
 
@@ -24,9 +22,11 @@ public class EntitiesID {
 	public static final EntityData WOLF = new EntityData(EntityTypes.WOLF, 11);
 
 	/**
-	 * An array of all acceptable entity types, given with the plugin id {@link EntityData#setId(int)}.
+	 * An array of all acceptable entity types, given with
+	 * the plugin id {@link EntityData#setId(int)}.
 	 * 
-	 * An acceptable entity type is any entity type that can breed, is not a villager and within the config file.
+	 * An acceptable entity type is any entity type that can
+	 * breed, is not a villager and within the config file.
 	 */
 	public static final EntityData[] ALL_ENTITIES = { COW, CHICKEN, DONKEY, HORSE, LLAMA, MUSHROOM_COW, OCELOT, PARROT,
 			PIG, RABBIT, SHEEP, WOLF };

@@ -1,7 +1,7 @@
 package io.github.Aquafinawaterbottle;
 
 /**
- *
+ * Class to define all plugin data necessary for sponge.
  */
 public class PluginData {
 	public static final String NAME = "BreedingPlus";

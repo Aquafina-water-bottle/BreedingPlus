@@ -7,7 +7,6 @@ import java.util.Random;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.data.key.Keys;
 import org.spongepowered.api.entity.Entity;
-import org.spongepowered.api.entity.EntityType;
 import org.spongepowered.api.entity.EntityTypes;
 import org.spongepowered.api.event.Listener;
 import org.spongepowered.api.event.cause.EventContextKeys;
@@ -34,6 +33,15 @@ public class BreedingManager {
 	// config options
 	private BreedingData breedingData;
 
+	/**
+	 * General constructor for the this class.
+	 * <P>
+	 * 
+	 * All this does is store {@link #breeding}, of which its only purpose is to
+	 * provide a logger that is identical to the Breeding class.
+	 * 
+	 * @param breeding internal variable to store the main class's contents.
+	 */
 	public BreedingManager(Breeding breeding) {
 		this.breeding = breeding;
 	}
@@ -42,11 +50,13 @@ public class BreedingManager {
 	 * Runs when an entity spawns, and decides whether a spawn egg should
 	 * replace the entity or not.
 	 * <P>
-	 * This runs through several checks to determine whether the entity:
+	 * This runs through several checks:
 	 * <ol>
-	 * 	<li>is summoned from a breeding event</li>
-	 * 	<li>passes the prng</li>
-	 * 	<li>is the proper entity type as determined by {@link EntitiesID#ALL_ENTITIES}</li>
+	 *  <li>The plugin is enabled</li>
+	 *  <li>The entity is not summoned by the plugin</li>
+	 * 	<li>The entity is summoned from a breeding event</li>
+	 *  <li>The entity is the proper entity type as determined by {@link EntitiesID#ALL_ENTITIES}</li>
+	 * 	<li>The entity passes the prng chosen by the JVM</li>
 	 * </ol>
 	 * 
 	 * @param event runs when any entity spawns in the world
@@ -126,10 +136,9 @@ public class BreedingManager {
 	}
 
 	/**
-	 * Summons the spawn_egg item, matching the entity's location and type
+	 * Summons the spawn_egg item, matching the entity's location and type.
 	 * 
-	 * @param itemStack
-	 * @param spawnLocation
+	 * @param entity determines the location of the item entity and the type of spawn egg
 	 */
 	private void summonEgg(Entity entity) {
 
@@ -193,9 +202,12 @@ public class BreedingManager {
 	 * Sets the data of the breeding manager to whatever the inputted data is.
 	 * <P>
 	 * 
-	 * Any incorrect values will be fixed here, as said by {@link BreedingData#setGlobalChance(int)},
-	 * {@link BreedingData#setIndividualMobChance(int[])}, and {@link BreedingData#setDebugLevel(int)}.
-	 * If the debug level is 1, 2 or 3, it will display the config data here.
+	 * Any incorrect values will be fixed here, as said by
+	 * {@link BreedingData#setGlobalChance(int)},
+	 * {@link BreedingData#setIndividualMobChance(int[])}, 
+	 * and {@link BreedingData#setDebugLevel(int)}.
+	 * 
+	 * Config data will outputted according to {@link BreedingData#setDebugLevel(int)}.
 	 * 
 	 * @param data the inputted data
 	 */
