@@ -57,7 +57,17 @@ public class Breeding {
 	 */
 	private BreedingManager breedingManager;
 
+	/**
+	 * Defines the player config file name (the config
+	 * file under the config folder).
+	 */
 	final String PLAYER_CONFIG_NAME = "player.conf";
+	
+	/**
+	 * Defines the default config name (the config
+	 * file you see if you open up the plugin jar
+	 * file with winrar/7zip/whatever).
+	 */
 	final String DEFAULT_CONFIG_NAME = "default.conf";
 
 	/**

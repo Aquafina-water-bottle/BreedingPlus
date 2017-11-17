@@ -21,19 +21,26 @@ public class BreedingData {
 
 	/**
 	 * This defines the percent chance a spawn egg should spawn
-	 * instead of a baby, given {@link #individualMobChance} for
+	 * instead of a baby, given {@link #individualMobChance} if
 	 * the mob is set to "-1".
 	 * <P>
 	 * 
 	 * The values under the config file should be set as an integer
-	 * between -1 and 100. If the value is missing or set incorrectly,
+	 * between 0 and 100. If the value is missing or set incorrectly,
 	 * this value defaults to "0".
 	 * 
 	 */
 	private int globalChance;
 
 	/**
+	 * This defines the percent chance a spawn egg should spawn
+	 * for each individual mob type.
+	 * <P>
 	 * 
+	 * The values under the config file should be set as an integer
+	 * between -1 and 100. Setting the value as -1 will automatically
+	 * use the {@link #globalChance} value. If the value is missing
+	 * or set incorrectly, this value defaults to "-1".
 	 */
 	private int[] individualMobChance = new int[12];
 
