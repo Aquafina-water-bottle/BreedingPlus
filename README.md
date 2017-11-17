@@ -8,7 +8,9 @@ I just realized that the javadocs makes this repository seem like this is just a
 
 ## Q & A
 Q: Why the hell is the main directory inside a folder with the same name?
+
 A: Because I'm superb at using github, that's why. Get on my level.
 
 Q: Was this entire section created just for that one question above this, even if there are actual valid questions that should be put here for the sake of user friendliness?
+
 A: Yes.
