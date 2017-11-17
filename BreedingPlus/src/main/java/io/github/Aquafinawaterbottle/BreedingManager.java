@@ -46,10 +46,10 @@ public class BreedingManager {
 	 * <ol>
 	 * 	<li>is summoned from a breeding event</li>
 	 * 	<li>passes the prng</li>
-	 * 	<li>is the proper entity type as determined by {@link Breeding#getItemType(EntityType)}</li>
+	 * 	<li>is the proper entity type as determined by {@link EntitiesID#ALL_ENTITIES}</li>
 	 * </ol>
 	 * 
-	 * @param event
+	 * @param event runs when any entity spawns in the world
 	 */
 	@Listener
 	public void checkingSpawnEvent(SpawnEntityEvent event) {
@@ -78,7 +78,8 @@ public class BreedingManager {
 
 				// Beginning of the debugging info
 				outputDebugStart(breedingData);
-				outputDebugInfo(breedingData, "The following has been summoned by SpawnTypes.BREEDING:" + event.toString());
+				outputDebugInfo(breedingData,
+						"The following has been summoned by SpawnTypes.BREEDING:" + event.toString());
 
 				// Gets the list, although idk why more than one mob can spawn from a breeding event
 				List<Entity> entities = event.getEntities();
@@ -148,8 +149,8 @@ public class BreedingManager {
 	/**
 	 * Outputs the debug info according to {@link BreedingData#setDebugLevel(int)}.
 	 * 
-	 * @param breedingData
-	 * @param output
+	 * @param breedingData data required to get the debug level
+	 * @param output message to output
 	 */
 	private void outputDebugInfo(BreedingData breedingData, String output) {
 		int debugLevel = breedingData.getDebugLevel();
@@ -166,21 +167,37 @@ public class BreedingManager {
 		}
 	}
 
-	private void outputDebugStart(BreedingData breedingData) {
-		outputDebugInfo(breedingData, "<< == START ==");
-	}
-
-	private void outputDebugEnd(BreedingData breedingData) {
-		outputDebugInfo(breedingData, "=== END === >>");
+	/**
+	 * Predefined info that is outputted at the start of a debug session
+	 * using {@link #outputDebugInfo(BreedingData, String)}
+	 * 
+	 * @param data data required to get the debug level
+	 */
+	private void outputDebugStart(BreedingData data) {
+		String startMessage = "<< == START ==";
+		outputDebugInfo(data, startMessage);
 	}
 
 	/**
+	 * Predefined info that is outputted at the end of a debug session
+	 * using {@link #outputDebugInfo(BreedingData, String)}
 	 * 
+	 * @param data data required to get the debug level
+	 */
+	private void outputDebugEnd(BreedingData data) {
+		String endMessage = "=== END === >>";
+		outputDebugInfo(data, endMessage);
+	}
+
+	/**
+	 * Sets the data of the breeding manager to whatever the inputted data is.
 	 * <P>
 	 * 
-	 * If the debug level is 1 or 2, it will display the config data here. 
+	 * Any incorrect values will be fixed here, as said by {@link BreedingData#setGlobalChance(int)},
+	 * {@link BreedingData#setIndividualMobChance(int[])}, and {@link BreedingData#setDebugLevel(int)}.
+	 * If the debug level is 1, 2 or 3, it will display the config data here.
 	 * 
-	 * @param data
+	 * @param data the inputted data
 	 */
 	public void setData(BreedingData data) {
 		this.breedingData = data;
