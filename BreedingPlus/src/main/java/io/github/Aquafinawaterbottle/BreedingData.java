@@ -27,11 +27,20 @@ public class BreedingData {
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
 	}
-
+	
 	/**
 	 * 
 	 * <P>
-	 * The global chance cannot be gotten because {@link #getInvididualMobChance()} should be used instead.
+	 * 
+	 * The global chance should not be gotten because {@link #getInvididualMobChance()} should be used instead.
+	 * @return
+	 */
+	public int getGlobalChance() {
+		return this.globalChance;
+	}
+
+	/**
+	 * 
 	 * 
 	 * @param global_chance
 	 */
@@ -83,9 +92,9 @@ public class BreedingData {
 		StringJoiner individualMobChanceString = new StringJoiner(", ");
 
 		for (EntityData entityData : EntitiesID.ALL_ENTITIES) {
-			StringJoiner individualEntityData = new StringJoiner(": ", "[", "]");
+			StringJoiner individualEntityData = new StringJoiner("=", "[", "]");
 			individualEntityData.add(entityData.getName());
-			individualEntityData.add(entityData.getId() + "");
+			individualEntityData.add(this.individualMobChance[entityData.getId()] + "");
 			individualMobChanceString.add(individualEntityData.toString());
 		}
 

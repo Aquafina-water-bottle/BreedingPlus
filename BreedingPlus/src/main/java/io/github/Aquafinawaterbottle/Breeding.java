@@ -1,6 +1,7 @@
 package io.github.Aquafinawaterbottle;
 
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.game.GameReloadEvent;
 import org.spongepowered.api.event.game.state.GameInitializationEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.Sponge;
@@ -65,7 +66,12 @@ public class Breeding {
 	@Listener
 	public void onInitializationEvent(GameInitializationEvent event) {
 		breedingManager = new BreedingManager(this);
+		
+		// Gets config data
 		breedingManager.setData(getConfigData());
+		
+		// Activate listeners in this class and the BreedingManager class
+		Sponge.getEventManager().registerListeners(this, breedingManager);
 	}
 
 	/**
@@ -139,24 +145,24 @@ public class Breeding {
 		int[] individualMobChance = new int[12];
 		int debugLevel;
 
-		// TODO see what happens if the node doesn't exist, and have checks on player input
-
+		// Gets all settings from the player config file here
 		enablePlugin = rootNode.getNode("enable_plugin").getBoolean();
 		globalChance = rootNode.getNode("global_chance").getInt();
 
 		for (EntityData entityData : EntitiesID.ALL_ENTITIES) {
-			individualMobChance[entityData.getId()] = rootNode.getNode("individual_mob_choice", entityData.getName())
+			individualMobChance[entityData.getId()] = rootNode.getNode("individual_mob_chance", entityData.getName())
 					.getInt();
 		}
 
 		debugLevel = rootNode.getNode("debug_level").getInt();
-		getLogger().error(debugLevel + "");
-
+		
 		playerConfigData.setEnabled(enablePlugin);
 		playerConfigData.setGlobalChance(globalChance);
 		playerConfigData.setIndividualMobChance(individualMobChance);
 		playerConfigData.setDebugLevel(debugLevel);
 
+		getLogger().info("Successfully loaded and read the config file.");
+		
 		return playerConfigData;
 	}
 
@@ -220,6 +226,18 @@ public class Breeding {
 		}
 	}
 
+
+	/**
+	 * Gets the config data again if the plugin is reloaded
+	 * 
+	 * @param event
+	 */
+    @Listener
+    public void onReloadEvent(GameReloadEvent event) {
+        breedingManager.setData(getConfigData());
+    }
+
+	
 	/**
 	 * Gets the logger for the plugin to output text into the console.
 	 * 

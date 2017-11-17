@@ -52,5 +52,12 @@ public class EntityData {
 		
 		return Optional.empty();
 	}
+
+	@Override
+	public String toString() {
+		return "EntityData [id=" + this.id + ", name=" + this.getName() + ", entityType=" + this.entityType + "]";
+	}
+	
+	
 	
 }
